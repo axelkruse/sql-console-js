@@ -23,10 +23,10 @@ Weitergehende Anforderungen
 - Abgabe der erstellten SQL Statements in Google Drive
 
 Beschreibung der Verzeichnisstruktur
-/       - Basis Verzeichnis (HTML-Dateien)
-/js     - Enthält die notwendigen JavaScript Dateien
-/css    - Cascading Stylesheets
-/icons  - Bilder mit Icons
-/test   - Beispielaufgabenstellungen und Scripte
+- /       - Basis Verzeichnis (HTML-Dateien)
+- /js     - Enthält die notwendigen JavaScript Dateien
+- /css    - Cascading Stylesheets
+- /icons  - Bilder mit Icons
+- /test   - Beispielaufgabenstellungen und Scripte
 
 

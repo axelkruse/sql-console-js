@@ -1,4 +1,4 @@
-# sql-console-js-
+# sql-console-js
 Zum Üben von SQL Statements benötigen Schüler eine einfache SQL Konsole. Für die meisten DBMS existieren solche Konsolen, mit denen man unmittelbar auf einen Datenbank Server zugreifen kann. Falls allerdings eine BYOD - Infrastruktur vorhanden ist, bringt dieser Ansatz einige Nachteile mit sich. (BYOD - Bring Your Own Device)
 - Ein DB - Server muss entweder durch den Lehrer bereeitgestellt werden oder auf dem Schülerrechner installiert werden. 
 - hoher Aufwand zur Administration des DBMS

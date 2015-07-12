@@ -5,7 +5,10 @@ Zum Üben von SQL Statements benötigen Schüler eine einfache SQL Konsole. Für
 - die Konsolenanwendung muss installiert ond konfiguriert werden
 - Abhängigkeit vom Betriebssystem
 
-Basis Anforderungen an eine SQL Konsole
+Basis Anforderungen an die zu erstellende SQL Konsole
+- Unabhängig vom Betriebssystem
+- keine Installation
+- keine besonderen Hardware - Anforderungen
 - SQL Statement erstellen 
 - SQL Statements ausführen
 - Ergebnis einer Abfrage anzeigen
@@ -19,5 +22,11 @@ Weitergehende Anforderungen
 - Abgabe der erstellten SQL Statements in Moodle
 - Abgabe der erstellten SQL Statements in Google Drive
 
+Beschreibung der Verzeichnisstruktur
+/       - Basis Verzeichnis (HTML-Dateien)
+/js     - Enthält die notwendigen JavaScript Dateien
+/css    - Cascading Stylesheets
+/icons  - Bilder mit Icons
+/test   - Beispielaufgabenstellungen und Scripte
 
 

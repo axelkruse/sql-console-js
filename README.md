@@ -30,5 +30,5 @@ Beschreibung der Verzeichnisstruktur
 - /test   - Beispielaufgabenstellungen und Scripte
 
 #Abhängigkeiten
-SQLJS - SQLJS steht unter der MIT-Licence und stellt in JavaScript einen SQLite Server zur Verfügung
-Icons - alle Icons sind dem Tango Desktop Projekt entnohmen.
+- SQLJS - SQLJS steht unter der MIT-Licence und stellt in JavaScript einen SQLite Server zur Verfügung. 
+- Icons - alle Icons sind dem Tango Desktop Projekt entnohmen.

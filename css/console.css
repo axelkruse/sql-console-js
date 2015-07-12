@@ -1,0 +1,143 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10.06.2015, 21:58:43
+    Author     : Axel
+*/
+/* -------------------------------------------------- */
+/* menubar */
+/* -------------------------------------------------- */
+html, body {
+    margin: 0;
+    padding: 0;
+	width: 100%;
+    height: 100%;
+	overflow: hidden;
+}
+#mnuBar {
+	position: absolute;
+	top: 0px;
+	bottom: 40px; 
+	left: 0;
+    padding:0;
+    background-color:#CCeeCC;
+    border-bottom:1px solid #677E78;
+    width: inherit;
+    overflow: hidden;
+    font-family:Verdana, sans-serif;
+	white-space: nowrap;
+}
+.mnuText {
+	white-space: pre;
+	width: 300px;
+	overflow:hidden;
+}
+.mnuRow{
+	width : 100%;
+}
+.mnuTool{
+	background-color: #CCFFCC;
+}
+.mnuFrame{
+	background-color: #CCFFCC;
+	text-align: right;
+}
+.mnuCell {
+	padding: 5px;
+	border: 1px;
+	background-color: #CCFFCC;
+}
+.mnuButton {
+	background-color: #CCCCCC;	
+}
+.btToolbarActive {
+	display: inline;
+}
+.btToolbarInactive {
+	display: none;
+}
+.frameActive {
+	position: absolute;
+	width: inherit;
+	padding: 0;
+	margin-right: 10px;
+	margin-left: 0;
+	top: 41px;
+	bottom: 0;
+    color:#fff;
+    background:#a0a0a0;
+    border-left:1px solid #000;
+	display: block;
+	overflow: scroll;
+}
+.frameInactive {
+	display: none;
+	
+}
+.output {
+	display: block;
+	overflow: hidden;
+}
+#editQuery {
+	white-space:pre;
+	width: 100%;
+	margin-right: 15px;
+	background-color: #ffffff;
+	color: #000000;
+	border: 1px solid #000000;
+}
+
+#logArea {
+
+}
+#assignIF {
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
+#structArea {
+
+}
+#modalOpenScript {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+  padding: 5px;
+  border: thin #000 solid;
+  background-color:#CCeeCC;;
+  z-index:3; /* places the modal on top of everything */
+  position:fixed;
+  top:25%;
+  left:25%;
+  display:none;
+}
+#modalLoadAssign {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+  padding: 5px;
+  border: thin #000 solid;
+  background-color:#CCeeCC;;
+  z-index:3; /* places the modal on top of everything */
+  position:fixed;
+  top:25%;
+  left:25%;
+  display:none;
+}
+
+#modalOverlay {
+  width:100%;
+  height:100%;
+  z-index:2; /* places the modalOverlay between the main page and the modal dialog */
+  background-color:#AAAAAA;;
+  opacity:0.5;
+  position:fixed;
+  top:0;
+  left:0;
+  display:none;
+  margin:0;
+  padding:0;
+}

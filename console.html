@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/console.css" type="text/css">
+        <title>SQL Trainer</title>
+        <script type="text/javascript" src="js/sql.js" async></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript" src="js/dom.js"></script>
+        <script type="text/javascript" src="js/console.js"></script>
+    </head>
+    <body>
+		<table id="mnuBar"><tr class="mnuRow">
+			<td class="mnuTool">
+				<button type="button" class="mnuButton" id="btOpenScript" title="Open Script" ><img src="icons/document-open.png" alt="Open"></button>
+				<button type="button" class="mnuButton" id="btExec" title="Execute SQL" ><img src="icons/go-bottom.png" alt="Execute"></button>
+				<button type="button" class="mnuButton" id="btClear" value="outputArea" title="Clear Output"><img src="icons/edit-delete.png" alt="Clear"></button>
+				<button type="button" class="mnuButton" id="btCopyLog" title="Copy to log"><img src="icons/edit-copy.png"  alt="Copy"></button>
+				<button type="button" class="mnuButton" id="btLoadAssign" title="Load Assignment"><img src="icons/text-html.png" alt="Assignment"></button>
+				<button type="button" class="mnuButton" id="btSettings" title="Settings"><img src="icons/preferences-system.png" alt="Settings"></button>
+			</td>
+			<td class="mnuFrame">
+				<select id="selFrame" title="Select Window">
+					<option id="mnuConsole" value="FrameConsole">SQL Konsole</option>
+					<option id="mnuAssign" value="FrameAssign">Aufgabenstellung</option>
+					<option id="mnuHistory" value="FrameHistory">Logbuch</option>
+					<option id="mnuStruct" value="FrameStruct">Datenbank Schema</option>
+					<option id="mnuHelp" value="FrameHelp">Hilfe</option>
+					<option id="mnuAbout" value="FrameAbout">Über SQL Trainer</option>
+				</select><span id="mnuText"> Anzeigefenster</span>
+			</td>
+		</tr></table>
+        <div id="FrameConsole" class="frameActive">
+            <textarea id="editQuery" rows="6" cols="" wrap="off">SELECT * FROM</textarea><br>
+              <div id="FrameOutput">
+                <h2>Anzeige Ergebnis Abfrage ausführen</h2>
+                <span id="outputArea" class="output"></span>
+            </div>
+        </div>
+        <div id="FrameAssign" class="frameInactive">
+           <iframe id="assignIF" src="defAssign.html" sandbox ></iframe>
+        </div>
+        <div id="FrameHistory" class="frameInactive">
+            <table>
+				<tr>
+					<td><button id="btClearLog" class="mnuButton">Logbuch löschen</button></td>
+					<td><button id="btSaveLog" class="mnuButton">Logbuch speichern</button></td>
+					<td><input id="cbAutosaveLog" type="checkbox" checked > Autosave Modus</td>
+				</tr>
+			</table>	
+            <pre id="logArea"></pre>
+        </div>
+        <div id="FrameHint" class="frameInactive">
+            <h2>Anzeige erwartetes Ergebnis der Abfrage</h2>	
+            <div id="expectedArea"></div>
+        </div>
+        <div id="FrameStruct" class="frameInactive">
+            <h2>Anzeige Struktur der DB</h2>	
+            <div id="structArea"></div>
+        </div>
+        <div id="FrameDocu" class="frameInactive">
+            <h2>Anzeige Dokumentation DB</h2>	
+             <iframe id="IFDocu" sandbox></iframe>
+        </div>
+        <div id="FrameHelp" class="frameInactive">
+            <h2>Anzeige Hilfe</h2>	
+            <div id="helpArea"></div>
+        </div>
+        <div id="FrameAbout" class="frameInactive">
+            <h2>Über SQL Trainer</h2>	
+            <table id="tableAbout">
+                <tr class="rowAbout"><td>Copyright: </td>
+                    <td>Copyright (c) 2015<br>
+                        Axel Kruse<br>
+                        Arensburger Str. 16<br>
+                        31710 Buchholz<br>
+                    </td></tr>
+                <tr class="rowAbout"><td>Lizenz: </td>
+                    <td>Diese Software steht unter der MIT Licence<br>
+                        Einzelheiten siehe: <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a><br>
+                    </td></tr>
+                <tr class="rowAbout"><td>Using</td>
+                    <td>
+                        Intern wird SQLJS verwendet.<br>
+                        SQLJS steht unter der MIT Lizenz.<br>
+                        Die Lizenz kann hier eingesehen werden: <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a><<br>
+                        Näherers zu SQLJS ist auf der Webseite von SQLJS zu finden:
+                        <a href="https://github.com/kripken/sql.js/">https://github.com/kripken/sql.js/</a>
+                    </td></tr>
+            </table>
+        </div>
+		<div id="modalOpenScript" role="dialog">
+				<h2>SQL Skript laden</h2>
+				Bitte geben die URL der zu ladenden Skript Datei ein.<br>
+				Sobald die Datei geladen ist, in der Toolbar auf den Button <img src="icons/go-bottom.png" alt="Execute"><br>
+				klicken, um das Skript auszuführen.<br> 
+				<input type="text" id="tbOpen"> Datei<br>
+				<br>
+				<button id="btOpenOKScript" value="modalOpenScript">OK</button> <button id="btOpenCancelScript" value="modalOpenScript">Abbruch</button>
+		</div>
+		<div id="modalLoadAssign" role="dialog">
+				<h2>Aufgabenstellung laden</h2>
+				Bitte geben die URL der zu ladenden HTML Datei ein.<br>
+				<br> 
+				<input type="text" id="tbOpenAssign"> Datei<br>
+				<br>
+				<button id="btOpenOKAssign" value="modalLoadAssign">OK</button> <button id="btOpenCancelAssign" value="modalLoadAssign">Abbruch</button>
+		</div>
+		<div id="modalOverlay" tabindex="-1"></div>
+    </body>
+</html>

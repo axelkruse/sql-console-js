@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="css/console.css" type="text/css">
         <title>SQL Trainer</title>
         <script type="text/javascript" src="js/sql.js" async></script>
+        <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/ajax.js"></script>
         <script type="text/javascript" src="js/dom.js"></script>
         <script type="text/javascript" src="js/console.js"></script>
@@ -13,47 +14,32 @@
     <body>
 		<table id="mnuBar"><tr class="mnuRow">
 			<td class="mnuTool">
-				<button type="button" class="mnuButton" id="btOpenScript" title="Open Script" ><img src="icons/document-open.png" alt="Open"></button>
-				<button type="button" class="mnuButton" id="btExec" title="Execute SQL" ><img src="icons/go-bottom.png" alt="Execute"></button>
-				<button type="button" class="mnuButton" id="btClear" value="outputArea" title="Clear Output"><img src="icons/edit-delete.png" alt="Clear"></button>
-				<button type="button" class="mnuButton" id="btCopyLog" title="Copy to log"><img src="icons/edit-copy.png"  alt="Copy"></button>
-				<button type="button" class="mnuButton" id="btLoadAssign" title="Load Assignment"><img src="icons/text-html.png" alt="Assignment"></button>
-				<button type="button" class="mnuButton" id="btSettings" title="Settings"><img src="icons/preferences-system.png" alt="Settings"></button>
+				<button type="button" class="btToolbarInactive" id="btOpenScript" title="Open Script" ><img src="icons/document-open.png" alt="Open"></button>
+				<button type="button" class="btToolbarInactive" id="btExec" title="Execute SQL" ><img src="icons/go-bottom.png" alt="Execute"></button>
+				<button type="button" class="btToolbarInactive" id="btNew" value="editQuery" title="New Statement" ><img src="icons/document-new.png" alt="New"></button>
+				<button type="button" class="btToolbarInactive" id="btClear" value="outputArea" title="Clear Output"><img src="icons/edit-delete.png" alt="Clear"></button>
+				<button type="button" class="btToolbarInactive" id="btCopyLog" title="Copy to log"><img src="icons/edit-copy.png"  alt="Copy"></button>
+				<button type="button" class="btToolbarInactive" id="btLoadAssign" title="Load Assignment"><img src="icons/text-html.png" alt="Assignment"></button>
+				<button type="button" class="btToolbarInactive" id="btClearLog" value="logArea" title="Clear Output"><img src="icons/edit-delete.png" alt="Clear"></button>				
+				
 			</td>
 			<td class="mnuFrame">
 				<select id="selFrame" title="Select Window">
-					<option id="mnuConsole" value="FrameConsole">SQL Konsole</option>
-					<option id="mnuAssign" value="FrameAssign">Aufgabenstellung</option>
-					<option id="mnuHistory" value="FrameHistory">Logbuch</option>
-					<option id="mnuStruct" value="FrameStruct">Datenbank Schema</option>
-					<option id="mnuHelp" value="FrameHelp">Hilfe</option>
-					<option id="mnuAbout" value="FrameAbout">Über SQL Trainer</option>
 				</select><span id="mnuText"> Anzeigefenster</span>
 			</td>
 		</tr></table>
         <div id="FrameConsole" class="frameActive">
             <textarea id="editQuery" rows="6" cols="" wrap="off">SELECT * FROM</textarea><br>
-              <div id="FrameOutput">
+            <div id="FrameOutput">
                 <h2>Anzeige Ergebnis Abfrage ausführen</h2>
                 <span id="outputArea" class="output"></span>
             </div>
         </div>
         <div id="FrameAssign" class="frameInactive">
-           <iframe id="assignIF" src="defAssign.html" sandbox ></iframe>
+           <iframe id="assignIF" src="" sandbox ></iframe>
         </div>
         <div id="FrameHistory" class="frameInactive">
-            <table>
-				<tr>
-					<td><button id="btClearLog" class="mnuButton">Logbuch löschen</button></td>
-					<td><button id="btSaveLog" class="mnuButton">Logbuch speichern</button></td>
-					<td><input id="cbAutosaveLog" type="checkbox" checked > Autosave Modus</td>
-				</tr>
-			</table>	
             <pre id="logArea"></pre>
-        </div>
-        <div id="FrameHint" class="frameInactive">
-            <h2>Anzeige erwartetes Ergebnis der Abfrage</h2>	
-            <div id="expectedArea"></div>
         </div>
         <div id="FrameStruct" class="frameInactive">
             <h2>Anzeige Struktur der DB</h2>	
@@ -64,8 +50,7 @@
              <iframe id="IFDocu" sandbox></iframe>
         </div>
         <div id="FrameHelp" class="frameInactive">
-            <h2>Anzeige Hilfe</h2>	
-            <div id="helpArea"></div>
+           <iframe id="helpIF" src="" sandbox ></iframe>
         </div>
         <div id="FrameAbout" class="frameInactive">
             <h2>Über SQL Trainer</h2>	
@@ -82,11 +67,14 @@
                     </td></tr>
                 <tr class="rowAbout"><td>Using</td>
                     <td>
-                        Intern wird SQLJS verwendet.<br>
+                        Als DBMS wird SQLJS verwendet.<br>
                         SQLJS steht unter der MIT Lizenz.<br>
                         Die Lizenz kann hier eingesehen werden: <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a><<br>
                         Näherers zu SQLJS ist auf der Webseite von SQLJS zu finden:
-                        <a href="https://github.com/kripken/sql.js/">https://github.com/kripken/sql.js/</a>
+                        <a href="https://github.com/kripken/sql.js/">https://github.com/kripken/sql.js/</a><br><br>
+						Alle Icons stammen aus dem Tango Desktop Projekt. Die Icons sind Public Domain.<br>
+						<a href="http://tango.freedesktop.org/">http://tango.freedesktop.org/</a><br><br>
+						Vielen Dank für die geleistete Arbeit an die Entwickler und Unterstützer der Projekte
                     </td></tr>
             </table>
         </div>

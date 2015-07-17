@@ -1,0 +1,5 @@
+<settings>
+	<assignment src="test/gpd.html" showload="false" />
+	<help src="test/gpd1.html" />
+	<script src="test/defload.sql" showload="false" />
+</settings> 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<sqltrainer> 
+	<global
+                title = "Gotham Police Department"
+		prefixstorage = "gpd"
+		storedb = "false"
+	/>
+	<documentation file="assignments/gpd.html"/>
+	<preexec file="assignments/creategpd.txt"></preexec>
+	<preexec file="assignments/insertgpd.txt"></preexec>
+	<panels>
+		<about />
+		<dbstruct />
+		<assignment src="" />
+		<log />
+	</panels>
+
+</sqltrainer>

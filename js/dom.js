@@ -1,26 +1,37 @@
 /* alle Funktionen zur Manipulation des DOM Trees */
 var DOM = {};
 /* Verwaltung von Fenstern = Div Elemente */
+DOM.guilist = new Array();
 DOM.panes = new Object();
 DOM.panes.paneList = new Array();
 DOM.panes.cssVisiblePane = null;
 DOM.panes.cssHiddenPane = null;
 DOM.panes.visiblePane = '';
-DOM.panes.addPane = function( idToAdd, funcOnLoad, arrEnabledBT, arrDisabledBT ) {
+DOM.panes.visiblePaneNo = -1;
+DOM.panes.selectId = '';
+DOM.panes.addPane = function( idToAdd, textSelOpt, funcOnLoad, arrEnabledBT ) {
 	var paneObj = new Object();
 	paneObj.id = idToAdd;
+	paneObj.selection = textSelOpt;
 	paneObj.onShow = funcOnLoad;
 	paneObj.enabledBT = arrEnabledBT;
-	paneObj.disabledBT = arrDisabledBT;
 	DOM.panes.paneList.push( paneObj );
 }
 DOM.panes.switchPane = function(idToShow) {
+	if(DOM.panes.visiblePaneNo >= 0 ) {
+		for (var i = 0; i < DOM.panes.paneList[DOM.panes.visiblePaneNo].enabledBT.length; i++) {
+			var objBT = DOM.getElem(DOM.panes.paneList[DOM.panes.visiblePaneNo].enabledBT[i]);
+			objBT.classList.remove(DOM.buttons.cssActive);
+			objBT.classList.add(DOM.buttons.cssInactive);			
+		}
+	}
     for (var i = 0; i < DOM.panes.paneList.length; i++) {
 		var objDisp = DOM.getElem(DOM.panes.paneList[i].id);
 		if (DOM.panes.paneList[i].id == idToShow ) {
 			objDisp.classList.remove(DOM.panes.cssHiddenPane);
             objDisp.classList.add(DOM.panes.cssVisiblePane);
 			DOM.panes.visiblePane = idToShow;
+			DOM.panes.visiblePaneNo = i;
 			if( DOM.panes.paneList[i].onShow != null ) {
 				DOM.panes.paneList[i].onShow();
 			}
@@ -29,18 +40,16 @@ DOM.panes.switchPane = function(idToShow) {
 				objBT.classList.remove(DOM.buttons.cssInactive);
 				objBT.classList.add(DOM.buttons.cssActive);
 			}
-			for( var bt=0; bt< DOM.panes.paneList[i].disabledBT.length; bt++) {
-				var objBT = DOM.getElem(DOM.panes.paneList[i].disabledBT[bt]);
-				objBT.classList.remove(DOM.buttons.cssActive);
-				objBT.classList.add(DOM.buttons.cssInactive);
-			}
 		} else {
-            objDisp.classList.remove(DOM.panes.cssVisiblePane);
-			objDisp.classList.add(DOM.panes.cssHiddenPane);
-        }	
+			objDisp.classList.remove(DOM.panes.cssVisiblePane);
+            objDisp.classList.add(DOM.panes.cssHiddenPane);			
+		}
 	}
 }
-DOM.panes.init  = function() {
+DOM.panes.init  = function( ) {
+	for( var i=0; i<DOM.panes.paneList.length; i++) {
+		DOM.dropDown.addOption( DOM.panes.selectId, DOM.panes.paneList[i].selection, DOM.panes.paneList[i].id )
+	}
 }
 /* Ende Fensterverwaltung */
 /* Buttons Toolbar */
@@ -83,6 +92,13 @@ DOM.dropDown.init = function() {
 		var objDD = DOM.getElem( DOM.dropDown.ddList[i].id);
 		objDD.onchange = DOM.dropDown.ddList[i].onChange; 
 	}
+}
+DOM.dropDown.addOption = function( idDD, textOption, value ) {
+	var dd = DOM.getElem( idDD );
+	var option = document.createElement("option");
+	option.text = textOption;
+	option.value = value;
+	dd.add(option);
 }
 DOM.modal = new Object();
 DOM.modal.overlay = 'modalOverlay';
@@ -136,138 +152,70 @@ DOM.loadIFrame = function(ifId, file) {
     objIF.src = file;
 };
 /* Tabellen dynamisch erzeugen */
-DOM.table = new Object();
-DOM.table.cssEvenRow = '';
-DOM.table.cssOddRow = '';
-DOM.table.cssOuter = '';
-DOM.table.cssCaption = '';
-DOM.table.cssHeadRow = '';
-DOM.table.cssHeadCell = '';
-DOM.table.cssBody = '';
-DOM.table.addTab(idParent, textCaption, dataHead, dataBody) {
-	//Caption
-	var capObj = document.createElement("caption");
-    capObj.appendChild(document.createTextNode(captionText));
-    if (DOM.table.cssCaption != '') {
-        capObj.className = DOM.table.cssCaption;
-    }
-    var headObj = document.createElement("thead");
-    var hRowObj = document.createElement("tr");
-    if (DOM.table.cssHeadRow != '') {
-        hRowObj.className = DOM.table.cssHeadRow;
-    }	
-    for (var i = 0; i < dataHead.length; i++) {
-        var cell = document.createElement("th");
-        cell.appendChild(document.createTextNode(dataHead[i]));
-		if (DOM.table.cssHeadCell != '') {
-			cell.className = DOM.table.cssHeadCell;
-		}		
-        hRowObj.appendChild(cell);
-    }
-    headObj.appendChild(hRowObj);
-    var bodyObj = document.createElement("tbody");	
-	for( var rows = 0; rows < dataBody.length, rows++ ) {
-		var rowObj = document.createElement("tr");
-		for (var cols = 0; cols < dataBody[rows].length; cols++) {
-			var cell = document.createElement("td");
-			cell.appendChild(document.createTextNode(arrCols[rows][cols]));
-			cell.className = arrCss[i];
-			rowObj.appendChild(cell);
+DOM.table = function() {
+	var that = this;
+	this.cssEvenRow = '';
+	this.cssOddRow = '';
+	this.cssCell = '';
+	this.cssCaption = '';
+	this.cssHeadRow = '';
+	this.cssHeadCell = '';
+	this.cssTable = '';
+	this.addTab = function(idParent, captionText, dataHead, dataBody) {
+		var objTable =  document.createElement("table");
+		if(that.cssTable != '') {
+			objTable.className = that.cssTable;
 		}
-		objBody.appendChild(rowObj);
-		return objBody		
+		//Caption
+		var capObj = document.createElement("caption");
+		capObj.appendChild(document.createTextNode(captionText));
+		if (that.cssCaption != '') {
+			capObj.className = that.cssCaption;
+		}
+		objTable.appendChild(capObj);
+		var headObj = document.createElement("thead");
+		var hRowObj = document.createElement("tr");
+		if (that.cssHeadRow != '') {
+			hRowObj.className = that.cssHeadRow;
+		}	
+		for (var i = 0; i < dataHead.length; i++) {
+			var cell = document.createElement("th");
+			cell.appendChild(document.createTextNode(dataHead[i]));
+			if (that.cssHeadCell != '') {
+				cell.className = that.cssHeadCell;
+			}		
+			hRowObj.appendChild(cell);
+		}
+		headObj.appendChild(hRowObj);
+		objTable.appendChild(headObj);
+		var bodyObj = document.createElement("tbody");	
+		for( var rows = 0; rows < dataBody.length; rows++ ) {
+			var rowObj = document.createElement("tr");
+			if( (rows % 2) == 0 ) {
+				if(that.cssOddRow != '') {
+					rowObj.className = that.cssOddRow;
+				}					
+			} else {
+				if(that.cssEvenRow != '') {
+					rowObj.className = that.cssEvenRow;
+				}				
+			}
+			for (var cols = 0; cols < dataBody[rows].length; cols++) {
+				var cell = document.createElement("td");
+				cell.appendChild(document.createTextNode(dataBody[rows][cols]));rows
+				if (that.cssCell != '') {
+					cell.className = that.cssCell;
+				}
+				rowObj.appendChild(cell);
+			}
+			bodyObj.appendChild(rowObj);	
+		}
+		objTable.appendChild(bodyObj);
+		var parentObj = DOM.getElem(idParent);
+		parentObj.insertBefore(objTable, parentObj.firstChild);
 	}
 }
-DOM.addTab = function (idParent, cssTab, captionObj, headObj, bodyObj) {
-    var tabObj = document.createElement("table");
-    if (cssTab != null) {
-        tabObj.className = cssTab;
-    }
-    tabObj.appendChild(captionObj);
-    tabObj.appendChild(headObj);
-    tabObj.appendChild(bodyObj);
-    var parent = document.getElementById(idParent);
-    parent.appendChild(tabObj);
-};
-DOM.createTabCaption = function (captionText, cssCaption) {
-    var capObj = document.createElement("caption");
-    capObj.appendChild(document.createTextNode(captionText));
-    if (typeof cssCaption === 'string') {
-        capObj.className = cssCaption;
-    }
-    return capObj;
-};
-DOM.genCssArr = function (arrGiven, expectedLength) {
-    if (arrGiven.length == expectedLength) {
-        return arrGiven;
-    }
-    var arrCss = new Array(expectedLength);
-    if (arrGiven.length == 1) {
-        for (var i = 0; i < expectedLength; i++) {
-            arrCss[i] = arrGiven[0];
-        }
-        return arrCss;
-    }
-    if (arrGiven.length == 2) {
-        for (var i = 0; i < expectedLength; i++) {
-            arrCss[i] = arrGiven[(i % 2)];
-        }
-        return arrCss;
-    }
-};
-DOM.createTabHead = function (arrCols, arrHeadCss) {
-    var headObj = document.createElement("thead");
-    var hRowObj = document.createElement("tr");
-    var arrCss = DOM.genCssArr(arrHeadCss, arrCols.length);
-    for (var i = 0; i < arrCols.length; i++) {
-        var cell = document.createElement("th");
-        cell.appendChild(document.createTextNode(arrCols[i]));
-        cell.className = arrCss[i];
-        hRowObj.appendChild(cell);
-    }
-    headObj.appendChild(hRowObj);
-    return headObj;
-};
-DOM.createTabBody = function () {
-    var bodyObj = document.createElement("tbody");
-    return bodyObj;
-};
-DOM.addRowToBody = function (objBody, arrCols, arrBodyCss) {
-    var rowObj = document.createElement("tr");
-    var arrCss = DOM.genCssArr(arrBodyCss, arrCols.length);
-    for (var i = 0; i < arrCols.length; i++) {
-        var cell = document.createElement("td");
-        cell.appendChild(document.createTextNode(arrCols[i]));
-        cell.className = arrCss[i];
-        rowObj.appendChild(cell);
-    }
-    objBody.appendChild(rowObj);
-    return objBody;
-};
 /* Ende Tabellen dynamisch erzeugen */
-DOM.addMsgWithCode = function (idParent, title, subtitle, code, cssDiv, cssCode) {
-    var divObj = document.createElement("div");
-    divObj.appendChild(document.createTextNode(title));
-    if (subtitle.length > 0) {
-        divObj.appendChild(document.createElement("br"));
-        divObj.appendChild(document.createTextNode(subtitle));
-    }
-    if (cssDiv != null) {
-        divObj.className = cssDiv;
-    }
-    var codeObj = document.createElement("pre");
-    codeObj.appendChild(document.createTextNode(code));
-    if (cssCode != null) {
-        codeObj.className = cssCode;
-    }
-    divObj.appendChild(codeObj);
-    var parent = DOM.getElem(idParent);
-	if(parent.childNodes[0]) {
-		parent.insertBefore(divObj, parent.childNodes[0]);
-	} else {
-		parent.appendChild(divObj);
-	}
-};
 DOM.clearDisplayArea = function (idOfOutArea) {
     var outArea = DOM.getElem(idOfOutArea);
     outArea.innerHTML = "";

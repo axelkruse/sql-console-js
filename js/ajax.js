@@ -35,18 +35,18 @@ function Ajax(methSend, url) {
 		if (updating) { return false; }
 		that.objAjax = null;
 		if (window.XMLHttpRequest) {
-			objAjax=new XMLHttpRequest();
+			that.objAjax=new XMLHttpRequest();
 		} else {
-			objAjax=new ActiveXObject("Microsoft.XMLHTTP");
+			that.objAjax=new ActiveXObject("Microsoft.XMLHTTP");
 		}  
-		if (objAjax==null) { 
+		if (that.objAjax==null) { 
 			return false;
 		} else {
-			objAjax.onreadystatechange =function() { 
-				if (objAjax.readyState==4) {
+			that.objAjax.onreadystatechange =function() { 
+				if (that.objAjax.readyState==4) {
 					updating=false;
-					that.callback(objAjax.responseText,objAjax.status,objAjax.responseXML);
-					objAjax=null; 
+					that.callback(that.objAjax.responseText,that.objAjax.status,that.objAjax.responseXML);
+					that.objAjax=null; 
 				}
 			}
 			updating = new Date();
@@ -54,16 +54,16 @@ function Ajax(methSend, url) {
 			var data = dataToSend;
 			if(method == "GET") {
 				var uri = uri + '&' + data;
-				objAjax.open("GET", uri, true);
-				objAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=ISO-8859-1");
+				that.objAjax.open("GET", uri, true);
+				that.objAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=ISO-8859-1");
 				data = null;
 			} else {
-				objAjax.open("POST", uri, true);
-				objAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=ISO-8859-1");
-				objAjax.setRequestHeader("Content-Length", data.length);
+				that.objAjax.open("POST", uri, true);
+				that.objAjax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=ISO-8859-1");
+				that.objAjax.setRequestHeader("Content-Length", data.length);
 			}
 			try {
-				objAjax.send(data);
+				that.objAjax.send(data);
 			} catch (e) {
 				alert("Fehler: \n" + e.message);
 			}

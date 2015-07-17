@@ -1,0 +1,18 @@
+type="elearning"
+	Aufgabenstellung im ELearning Tool
+	Abgabe Aufgabe im Elearning Tool
+	Konsole, DB-Struktur und About
+type="google"
+	Aufgabenstellung in Google Form
+	Abgabe in Google Form
+	Anzeige im Iframe
+	Konsole, DB-Struktur, About und Aufgabe
+type="Standalone"
+	Aufgabenstellung im HTML Format
+	Anzeige im Iframe
+	Keine Abgabe
+	Konsole, DB-Struktur, About und Aufgabe
+
+
+Folgerung: google und standalone gleich
+Keine Buttons mehr
